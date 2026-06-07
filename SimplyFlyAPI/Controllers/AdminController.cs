@@ -118,7 +118,7 @@ namespace SimplyFlyAPI.Controllers
         }
 
         // CANCEL FLIGHT
-
+        // DELETE FLIGHT
         [HttpPut("flights/cancel/{id}")]
         public IActionResult CancelFlight(int id)
         {
