@@ -36,8 +36,7 @@ namespace SimplyFlyAPI.Services.Booking
                 .ToList();
         }
 
-        public bool BookFlight(
-            Models.Booking booking)
+        public bool BookFlight( Models.Booking booking)
         {
             var flight =
                 _context.Flights.FirstOrDefault(

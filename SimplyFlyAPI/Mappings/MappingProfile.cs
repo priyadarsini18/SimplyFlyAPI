@@ -31,22 +31,8 @@ namespace SimplyFlyAPI.Mappings
                 .ForMember(dest => dest.CreatedAt,
                     opt => opt.Ignore());
 
-            CreateMap<RegisterAdminDto, User>()
-                .ForMember(dest => dest.UserId,
-                    opt => opt.Ignore())
-                .ForMember(dest => dest.Role,
-                    opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt,
-                    opt => opt.Ignore());
 
-
-            CreateMap<RegisterFlightOwnerDto, User>()
-                .ForMember(dest => dest.UserId,
-                    opt => opt.Ignore())
-                .ForMember(dest => dest.Role,
-                    opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt,
-                    opt => opt.Ignore());
+            CreateMap<CreateFlightOwnerDto, User>();
 
             CreateMap<CreateBookingDto, Booking>()
                 .ForMember(dest => dest.BookingId,

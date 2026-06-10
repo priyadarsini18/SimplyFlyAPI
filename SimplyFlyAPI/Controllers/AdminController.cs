@@ -2,34 +2,40 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SimplyFlyAPI.DTOs.Auth;
 using SimplyFlyAPI.DTOs.Flight;
 using SimplyFlyAPI.Models;
 using SimplyFlyAPI.Services.Admin;
+using SimplyFlyAPI.Services.Auth;
 
 namespace SimplyFlyAPI.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,FlightOwner")]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
         private readonly IMapper _mapper;
         private readonly ILogger<AdminController> _logger;
+        private readonly IAuthService _authService;
 
         public AdminController(
             IAdminService adminService,
             IMapper mapper,
-            ILogger<AdminController> logger)
+            ILogger<AdminController> logger,
+            IAuthService authService)
         {
             _adminService = adminService;
             _mapper = mapper;
             _logger = logger;
+            _authService = authService;
         }
 
         // GET ALL FLIGHTS
 
+        [Authorize(Roles = "Admin,FlightOwner")]
         [HttpGet("flights")]
         public IActionResult GetFlights()
         {
@@ -41,6 +47,7 @@ namespace SimplyFlyAPI.Controllers
 
         // GET FLIGHT BY ID
 
+        [Authorize(Roles = "Admin,FlightOwner")]
         [HttpGet("flights/{id}")]
         public IActionResult GetFlightById(int id)
         {
@@ -65,6 +72,7 @@ namespace SimplyFlyAPI.Controllers
 
         // ADD FLIGHT
 
+        [Authorize(Roles = "Admin,FlightOwner")]
         [HttpPost("flights")]
         public IActionResult AddFlight(CreateFlightDto dto)
         {
@@ -85,6 +93,7 @@ namespace SimplyFlyAPI.Controllers
 
         // UPDATE FLIGHT
 
+        [Authorize(Roles = "Admin,FlightOwner")]
         [HttpPut("flights/{id}")]
         public IActionResult UpdateFlight(
             int id,
@@ -118,7 +127,8 @@ namespace SimplyFlyAPI.Controllers
         }
 
         // CANCEL FLIGHT
-        // DELETE FLIGHT
+
+        [Authorize(Roles = "Admin,FlightOwner")]
         [HttpPut("flights/cancel/{id}")]
         public IActionResult CancelFlight(int id)
         {
@@ -146,6 +156,7 @@ namespace SimplyFlyAPI.Controllers
 
         // DELETE FLIGHT (SOFT DELETE)
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("flights/{id}")]
         public IActionResult DeleteFlight(int id)
         {
@@ -168,6 +179,32 @@ namespace SimplyFlyAPI.Controllers
             return Ok(new
             {
                 Message = "Flight Deleted Successfully"
+            });
+        }
+
+        // CREATE FLIGHT OWNER
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("create-flightowner")]
+        public IActionResult CreateFlightOwner(
+            CreateFlightOwnerDto dto)
+        {
+            var user =
+                _mapper.Map<User>(dto);
+
+            user.Role = "FlightOwner";
+
+            var createdUser =
+                _authService.Register(user);
+
+            _logger.LogInformation(
+                "FlightOwner {Email} created by Admin",
+                user.Email);
+
+            return Ok(new
+            {
+                Message = "FlightOwner Created Successfully",
+                UserId = createdUser.UserId
             });
         }
     }

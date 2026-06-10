@@ -27,34 +27,6 @@ namespace SimplyFlyAPI.Controllers
             _logger = logger;
         }
 
-        // REGISTER ADMIN
-
-        [HttpPost("register-Admin")]
-        public IActionResult Register(RegisterAdminDto dto)
-        {
-            if (dto.AdminKey != "2026")
-            {
-                _logger.LogWarning(
-                    "Invalid Admin Registration Attempt. Email: {Email}",
-                    dto.Email);
-
-                return Unauthorized("Invalid Admin Key");
-            }
-
-            var user = _mapper.Map<User>(dto);
-            user.Role = "Admin";
-
-            _authService.Register(user);
-
-            _logger.LogInformation(
-                "Admin Registered Successfully. Email: {Email}",
-                user.Email);
-
-            return Ok(new
-            {
-                Message = "Admin Registered Successfully"
-            });
-        }
 
         // REGISTER USER
 
@@ -79,42 +51,7 @@ namespace SimplyFlyAPI.Controllers
             });
         }
 
-        // REGISTER FLIGHT OWNER
-
-        [HttpPost("register-flightowner")]
-        public IActionResult RegisterFlightOwner(
-            RegisterFlightOwnerDto dto)
-        {
-            if (dto.FlightOwnerKey != "FLY2026")
-            {
-                _logger.LogWarning(
-                    "Invalid Flight Owner Registration Attempt. Email: {Email}",
-                    dto.Email);
-
-                return Unauthorized(
-                    "Invalid Flight Owner Key");
-            }
-
-            var user =
-                _mapper.Map<User>(dto);
-
-            user.Role = "FlightOwner";
-
-            var registeredUser =
-                _authService.Register(user);
-
-            _logger.LogInformation(
-                "Flight Owner Registered Successfully. Email: {Email}",
-                user.Email);
-
-            return Ok(new
-            {
-                Message =
-                    "Flight Owner Registered Successfully",
-                UserId =
-                    registeredUser.UserId
-            });
-        }
+        
 
         // LOGIN
 
