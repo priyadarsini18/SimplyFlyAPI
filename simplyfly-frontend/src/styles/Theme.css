@@ -1,0 +1,28 @@
+
+:root {
+    --primary: #0096C7;
+    --secondary: #48CAE4;
+    --ocean: #00B4D8;
+    --sky: #CAF0F8;
+    --success: #2ECC71;
+    --dark: #1B4965;
+    --white: #FFFFFF;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient( 180deg, #F8FDFF, #E3F7FF );
+    font-family: "Segoe UI", sans-serif;
+}
+.btn-theme {
+    background: linear-gradient( 135deg, var(--primary), var(--secondary) );
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+    .btn-theme:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,180,216,.35);
+    }

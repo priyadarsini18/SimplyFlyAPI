@@ -1,4 +1,5 @@
-﻿using SimplyFlyAPI.Models;
+﻿using SimplyFlyAPI.DTOs.User_DTO;
+using SimplyFlyAPI.Models;
 
 namespace SimplyFlyAPI.Services.Users
 {
@@ -8,6 +9,8 @@ namespace SimplyFlyAPI.Services.Users
 
         User? GetUserById(int id);
 
-        
+        bool UpdateUser(
+            int id,
+            UpdateUserDto dto);
     }
 }

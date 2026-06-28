@@ -9,5 +9,6 @@ namespace SimplyFlyAPI.Services.Auth
         string Login(
             string email,
             string password);
+        User GetUserByEmail(string email);
     }
 }

@@ -23,6 +23,40 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.flight-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.flight-card-body {
+    flex: 1;
+}
+
+.flight-actions {
+    margin-top: auto;
+}
+flight-card {
+    transition: all 0.35s ease;
+    cursor: pointer;
+}
+
+.flight-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.95);
+}
+
+    .flight-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+    }
+
+        .flight-card:hover .flight-title {
+            color: #ffd800;
+        }
 
 .App-link {
   color: #61dafb;

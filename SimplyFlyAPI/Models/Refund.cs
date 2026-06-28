@@ -15,9 +15,8 @@ namespace SimplyFlyAPI.Models
         [Required]
         public decimal RefundAmount { get; set; }
 
-        [Required]
-        public DateTime RefundDate { get; set; }
-            = DateTime.Now;
+        
+        public DateTime? RefundDate { get; set; }
 
         [Required]
         public string RefundStatus { get; set; }
@@ -28,5 +27,7 @@ namespace SimplyFlyAPI.Models
         // Navigation Property
 
         public Booking? Booking { get; set; }
+
+       
     }
 }

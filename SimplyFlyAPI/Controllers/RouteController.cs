@@ -11,7 +11,7 @@ namespace SimplyFlyAPI.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    
     public class RouteController : ControllerBase
     {
         private readonly IRouteService _routeService;

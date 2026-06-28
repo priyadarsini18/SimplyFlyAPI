@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SimplyFlyAPI.DTOs.Auth;
+using SimplyFlyAPI.DTOs.Auth_DTOs;
 using SimplyFlyAPI.DTOs.Booking;
 using SimplyFlyAPI.DTOs.Flight;
 using SimplyFlyAPI.DTOs.Passenger;
@@ -30,6 +31,13 @@ namespace SimplyFlyAPI.Mappings
                     opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt,
                     opt => opt.Ignore());
+            CreateMap<RegisterFlightOwnerDto, User>()
+    .ForMember(dest => dest.UserId,
+        opt => opt.Ignore())
+    .ForMember(dest => dest.Role,
+        opt => opt.Ignore())
+    .ForMember(dest => dest.CreatedAt,
+        opt => opt.Ignore());
 
 
             CreateMap<CreateFlightOwnerDto, User>();
@@ -50,13 +58,15 @@ namespace SimplyFlyAPI.Mappings
     .ForMember(dest => dest.Flight,
         opt => opt.Ignore());
 
-            CreateMap<Booking, BookingResponseDto>();
+            
 
             CreateMap<PassengerDto, Passenger>()
     .ForMember(dest => dest.PassengerId,
         opt => opt.Ignore())
     .ForMember(dest => dest.Booking,
         opt => opt.Ignore());
+            
+   
 
 
             CreateMap<PaymentDto, Payment>()
@@ -78,6 +88,7 @@ namespace SimplyFlyAPI.Mappings
         opt => opt.Ignore())
     .ForMember(dest => dest.Booking,
         opt => opt.Ignore());
+
 
             CreateMap<RouteDto, FlightRoute>()
                 .ForMember(dest => dest.RouteId,

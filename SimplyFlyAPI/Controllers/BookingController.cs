@@ -12,20 +12,21 @@ namespace SimplyFlyAPI.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
     public class BookingController : ControllerBase
     {
         private readonly IBookingService _bookingService;
         private readonly IMapper _mapper;
+
         public BookingController(
-            IBookingService bookingService,IMapper mapper)
+            IBookingService bookingService,
+            IMapper mapper)
         {
             _bookingService = bookingService;
             _mapper = mapper;
         }
 
         // GET ALL BOOKINGS
-
         [HttpGet]
         public IActionResult GetBookings()
         {
@@ -33,32 +34,26 @@ namespace SimplyFlyAPI.Controllers
                 _bookingService.GetBookings());
         }
 
-        // GET  BOOKINGS
-
+        // GET LOGGED-IN USER BOOKINGS
         [HttpGet("my-bookings")]
         public IActionResult GetMyBookings()
         {
             var userId =
-                int.Parse(
-                    User.FindFirst(
-                        ClaimTypes.NameIdentifier)!
-                    .Value);
+    int.Parse(
+        User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+    );
 
             var bookings =
                 _bookingService.GetUserBookings(userId);
 
-            var result =
-                _mapper.Map<List<BookingResponseDto>>(
-                    bookings);
-
-            return Ok(result);
+            return Ok(bookings);
         }
 
-        // BOOK FLIGHT
 
+        // BOOK FLIGHT
         [HttpPost]
         public IActionResult BookFlight(
-    CreateBookingDto dto)
+            CreateBookingDto dto)
         {
             var booking =
                 _mapper.Map<Booking>(dto);
@@ -70,8 +65,9 @@ namespace SimplyFlyAPI.Controllers
                     .Value);
 
             var result =
-                _bookingService.BookFlight(
-                    booking);
+    _bookingService.BookFlight(
+        booking,
+        dto.SeatIds);
 
             if (!result)
             {
@@ -81,31 +77,42 @@ namespace SimplyFlyAPI.Controllers
 
             return Ok(new
             {
+                bookingId = booking.BookingId,
                 message =
                 "Flight Booked Successfully"
             });
         }
 
         // CANCEL BOOKING
-
         [HttpDelete("{id}")]
-        public IActionResult CancelBooking(
-            int id)
+        public async Task<IActionResult> CancelBooking(int id)
         {
-            var result =
-                _bookingService.CancelBooking(id);
+            var refund =
+                await _bookingService
+                .CancelBooking(id);
 
-            if (!result)
+            if (refund == -1)
             {
-                return NotFound(
-                    "Booking Not Found");
+                return NotFound();
             }
 
             return Ok(new
             {
-                message =
-                "Booking Cancelled Successfully"
+                RefundAmount = refund
             });
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetBookingById(int id)
+        {
+            var booking = _bookingService.GetBookingById(id);
+
+            if (booking == null)
+            {
+                return NotFound("Booking not found");
+            }
+
+            return Ok(booking);
         }
     }
 }

@@ -25,6 +25,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// CORS
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 //API Versioning
 
 // 1. Add standard API Versioning
@@ -105,7 +118,7 @@ builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRefundService,RefundService>();
-
+builder.Services.AddScoped<TicketPdfService>();
 // JWT Authentication
 
 builder.Services
@@ -137,7 +150,7 @@ builder.Services
 
 builder.Services
     .AddProblemDetails();
-
+builder.Services.AddScoped<IEmailService, EmailService>();
 // Build
 
 var app = builder.Build();
@@ -160,6 +173,8 @@ app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowReactApp");
+app.UseStaticFiles();
 app.UseAuthentication();
 
 app.UseAuthorization();

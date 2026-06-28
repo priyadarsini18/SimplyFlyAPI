@@ -1,0 +1,13 @@
+# Ignore zip files
+*.zip
+
+# Visual Studio
+.vs/
+bin/
+obj/
+
+# Node
+node_modules/
+
+# Logs
+*.log

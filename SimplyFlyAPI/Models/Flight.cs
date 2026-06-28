@@ -19,6 +19,13 @@ namespace SimplyFlyAPI.Models
 
         [Required]
         public string ToCity { get; set; } = string.Empty;
+        public string? FromAirportName { get; set; }
+
+        public string? FromAirportCode { get; set; }
+
+        public string? ToAirportName { get; set; }
+
+        public string? ToAirportCode { get; set; }
 
         [Required]
         [ForeignKey(nameof(Route))]
@@ -42,6 +49,23 @@ namespace SimplyFlyAPI.Models
         [Required]
         public string Status { get; set; }
             = "Available";
+        public string? CabinClass { get; set; }
+        public string? Stop1 { get; set; }
+
+        public string? Stop2 { get; set; }
+
+        public string? FlightType { get; set; }
+
+        public string? JourneyType { get; set; }
+
+        public bool FoodIncluded { get; set; }
+
+        public int FlightOwnerId { get; set; }
+
+        public User? FlightOwner { get; set; }
+        public int CabinBaggageKg { get; set; }
+
+        public int CheckInBaggageKg { get; set; }
 
         // Navigation Property
 
@@ -50,5 +74,6 @@ namespace SimplyFlyAPI.Models
         // other properties
 
         public bool IsDeleted { get; set; } = false;
+        public ICollection<SeatReservation> SeatReservations { get; set; }
     }
 }

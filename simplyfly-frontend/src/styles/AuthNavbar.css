@@ -1,0 +1,48 @@
+.auth-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    background: linear-gradient( 90deg, #a0a8ab, #00b4db );
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,.15);
+}
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.9px;
+}
+
+    .auth-logo img {
+        width: 130px;
+    }
+
+    .auth-logo h3 {
+        color: white;
+        margin: 0;
+    }
+
+.auth-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+    .auth-links a {
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+    }
+
+.register-btn {
+    background: #49cab5;
+    color: black !important;
+    padding: 12px 30px;
+    border-radius: 20px;
+}

@@ -23,6 +23,7 @@ namespace SimplyFlyAPI.Models
         [Required]
         public int NumberOfSeats { get; set; }
 
+        public string? SeatPreference { get; set; }
         [Required]
         public decimal TotalAmount { get; set; }
 
@@ -31,6 +32,9 @@ namespace SimplyFlyAPI.Models
             = "Booked";
 
         public string? PaymentStatus { get; set; }
+
+        // NEW
+        public decimal RefundAmount { get; set; } 
 
         // Navigation Properties
 

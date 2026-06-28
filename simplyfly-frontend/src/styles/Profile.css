@@ -1,0 +1,320 @@
+/* ===========================
+   SIMPLYFLY PROFILE
+=========================== */
+.profile-header {
+    background: linear-gradient(135deg,#4f93a2,#63b7d6);
+    border: 4px solid #ffffff;
+    box-shadow: 0 0 25px rgba(14,165,233,.35);
+}
+body {
+    background: #eef8fd;
+    font-family: 'Segoe UI',sans-serif;
+}
+.edit-profile-btn {
+    margin-top: 30px;
+}
+/* Main Layout */
+
+.profile-page {
+    display: flex;
+    min-height: 100vh;
+    background: #eef8fd;
+}
+
+/* ================= Sidebar ================= */
+
+.profile-sidebar {
+    width: 300px;
+    background: linear-gradient(180deg,#4f93a2,#2d788d);
+    color: white;
+    padding: 35px 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-shadow: 0 10px 30px rgba(0,0,0,.18);
+}
+
+.sidebar-user {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+    .sidebar-user img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 6px solid rgba(255,255,255,.8);
+        box-shadow: 0 15px 35px rgba(0,0,0,.3);
+        transition: .4s;
+    }
+
+        .sidebar-user img:hover {
+            transform: scale(1.08);
+        }
+
+    .sidebar-user h3 {
+        margin-top: 20px;
+        font-size: 38px;
+        font-weight: 700;
+    }
+
+    .sidebar-user p {
+        opacity: .8;
+        font-size: 18px;
+    }
+
+.profile-sidebar ul {
+    padding: 0;
+    list-style: none;
+}
+
+    .profile-sidebar ul li {
+        padding: 16px 20px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: .35s;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+        .profile-sidebar ul li:hover {
+            background: rgba(255,255,255,.18);
+            transform: translateX(8px);
+        }
+
+/* ================= Right Section ================= */
+
+.profile-content {
+    flex: 1;
+    padding: 40px;
+}
+
+/* ================= Header ================= */
+
+.profile-header {
+    background: linear-gradient(135deg,rgba(0,0,0,.3),#63b7d6);
+    border-radius: 25px;
+    padding: 40px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,.15);
+    margin-bottom: 30px;
+}
+
+    .profile-header h1 {
+        font-size: 62px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .profile-header p {
+        font-size: 18px;
+        margin: 4px 0;
+    }
+
+    .profile-header button {
+        background: white;
+        color: #0ea5e9;
+        border: none;
+        padding: 15px 35px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 18px;
+        transition: .3s;
+    }
+
+        .profile-header button:hover {
+            background: #0ea5e9;
+            color: white;
+        }
+
+/* ================= Stats ================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 12px 25px rgba(0,0,0,.08);
+    transition: .35s;
+}
+
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0,0,0,.18);
+    }
+
+    .stat-card h1 {
+        color: #0ea5e9;
+        font-size: 50px;
+        font-weight: 700;
+    }
+
+    .stat-card p {
+        margin-top: 8px;
+        color: #666;
+        font-size: 18px;
+    }
+
+/* ================= Cards ================= */
+
+.card {
+    border: none !important;
+    border-radius: 22px !important;
+    padding: 18px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.08) !important;
+    margin-bottom: 35px;
+    border-left: 5px solid #0ea5e9 !important;
+    border-right: 5px solid #0ea5e9 !important;
+    border-radius: 20px;
+}
+.col-md-4,
+.col-md-6,
+.col-md-12 {
+    background: rgb(133, 197, 214, 0.30);
+    border: 2px solid #7edfe0;
+    border-radius: 9px;
+    margin-bottom: 15px;
+    transition: .3s;
+}
+
+    .col-md-4:hover,
+    .col-md-6:hover,
+    .col-md-12:hover {
+        border-color: #90bcca;
+        background: #2dd4d2;
+        transform: translateY(-3px);
+    }
+
+    .card h3 {
+        color: #0b4f66;
+        font-size: 38px;
+        font-weight: 700;
+    }
+
+    .card hr {
+        margin: 18px 0 30px;
+    }
+
+    .card strong {
+        color: #1b4965;
+        font-size: 18px;
+    }
+
+    .card p {
+        color: #555;
+        font-size: 17px;
+    }
+
+/* ================= Personal Info ================= */
+
+.row .col-md-4,
+.row .col-md-6,
+.row .col-md-12 {
+    padding: 18px;
+    border-radius: 16px;
+    transition: .3s;
+}
+
+    .row .col-md-4:hover,
+    .row .col-md-6:hover,
+    .row .col-md-12:hover {
+        background: #f5fcff;
+    }
+
+/* ================= Table ================= */
+
+.table {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+    .table thead {
+        background: #0ea5e9;
+        color: #bee4e3;
+    }
+
+    .table th {
+        border: none;
+        padding: 16px;
+    }
+
+    .table td {
+        padding: 16px;
+        vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+        background: #f4fbff;
+    }
+
+/* ================= Badges ================= */
+
+.badge {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 30px;
+}
+
+/* ================= Buttons ================= */
+
+.btn {
+    border-radius: 12px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+/* ================= Scrollbar ================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4f93a2;
+    border-radius: 20px;
+}
+
+/* ================= Responsive ================= */
+
+@media(max-width:991px) {
+
+    .profile-page {
+        flex-direction: column;
+    }
+
+    .profile-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+
+        .profile-header h1 {
+            font-size: 42px;
+        }
+}

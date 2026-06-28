@@ -1,4 +1,5 @@
-﻿using SimplyFlyAPI.Models;
+﻿using SimplyFlyAPI.DTOs.Booking;
+using SimplyFlyAPI.Models;
 
 namespace SimplyFlyAPI.Services.Booking
 {
@@ -6,13 +7,13 @@ namespace SimplyFlyAPI.Services.Booking
     {
         List<Models.Booking> GetBookings();
 
-        List<Models.Booking> GetUserBookings(
-            int userId);
+        List<BookingResponseDto> GetUserBookings(int userId);
 
         bool BookFlight(
-            Models.Booking booking);
+    Models.Booking booking,
+    List<int> seatIds);
 
-        bool CancelBooking(
-            int id);
+        Task<decimal> CancelBooking(int id);
+        SimplyFlyAPI.Models.Booking GetBookingById(int id);
     }
 }

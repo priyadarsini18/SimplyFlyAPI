@@ -10,12 +10,14 @@ public record RegisterUserDto(
     [EmailAddress(ErrorMessage = "Invalid Email Format")]
     string Email,
 
-    [Required(ErrorMessage = "Password is required")]
-    [MinLength(6,
-        ErrorMessage = "Password must be at least 6 characters")]
+   [RegularExpression(
+        @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$",
+        ErrorMessage =
+        "Password must contain Uppercase, Lowercase, Number, Special Character and minimum 8 characters")]
     string Password,
 
     [Required(ErrorMessage = "Phone Number is required")]
     [Phone]
     string PhoneNumber
+     
 );

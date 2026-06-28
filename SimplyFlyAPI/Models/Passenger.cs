@@ -24,8 +24,7 @@ namespace SimplyFlyAPI.Models
         [Required]
         public string SeatNumber { get; set; } = string.Empty;
 
-        [Required]
-        public string PassportNumber { get; set; } = string.Empty;
+        
 
         // Navigation Property
 

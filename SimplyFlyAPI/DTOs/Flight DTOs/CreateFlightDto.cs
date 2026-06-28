@@ -3,36 +3,39 @@
 namespace SimplyFlyAPI.DTOs.Flight;
 
 public record CreateFlightDto(
-    [Required]
-    string FlightName,
 
-    [Required]
+    string FlightName,
     string FlightNumber,
 
-    [Required]
     string FromCity,
-
-    [Required]
     string ToCity,
 
-    [Required]
+    string? FromAirportName,
+    string? FromAirportCode,
+
+    string? ToAirportName,
+    string? ToAirportCode,
+
     int RouteId,
 
-    [Required]
     DateTime DepartureTime,
-
-    [Required]
     DateTime ArrivalTime,
 
-    [Range(1, 100000)]
     decimal Price,
 
-    [Range(1, 500)]
     int TotalSeats,
-
-    [Range(0, 500)]
     int AvailableSeats,
 
-    [Required]
-    string Status
+    string Status,
+
+    string? CabinClass,
+    string? Stop1,
+string? Stop2,
+    string? FlightType,
+    string? JourneyType,
+
+    bool FoodIncluded,
+
+    int CabinBaggageKg,
+    int CheckInBaggageKg
 );

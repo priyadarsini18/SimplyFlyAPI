@@ -17,10 +17,39 @@ namespace SimplyFlyAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "10.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Seat", b =>
+                {
+                    b.Property<int>("SeatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatId"));
+
+                    b.Property<int>("FlightId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsBooked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SeatNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeatType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SeatId");
+
+                    b.HasIndex("FlightId");
+
+                    b.ToTable("Seats");
+                });
 
             modelBuilder.Entity("SimplyFlyAPI.Models.Booking", b =>
                 {
@@ -46,6 +75,9 @@ namespace SimplyFlyAPI.Migrations
                     b.Property<string>("PaymentStatus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("RefundAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -53,6 +85,10 @@ namespace SimplyFlyAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("BookingId");
+
+                    b.HasIndex("FlightId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
                 });
@@ -71,6 +107,12 @@ namespace SimplyFlyAPI.Migrations
                     b.Property<int>("AvailableSeats")
                         .HasColumnType("int");
 
+                    b.Property<int>("CabinBaggageKg")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CheckInBaggageKg")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DepartureTime")
                         .HasColumnType("datetime2");
 
@@ -82,9 +124,23 @@ namespace SimplyFlyAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FlightOwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FromAirportCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FromAirportName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FromCity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -96,6 +152,14 @@ namespace SimplyFlyAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ToAirportCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToAirportName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ToCity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -104,6 +168,8 @@ namespace SimplyFlyAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("FlightId");
+
+                    b.HasIndex("FlightOwnerId");
 
                     b.HasIndex("RouteId");
 
@@ -159,6 +225,8 @@ namespace SimplyFlyAPI.Migrations
 
                     b.HasKey("PassengerId");
 
+                    b.HasIndex("BookingId");
+
                     b.ToTable("Passengers");
                 });
 
@@ -180,14 +248,49 @@ namespace SimplyFlyAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentStatus")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentId");
 
+                    b.HasIndex("BookingId");
+
                     b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("SimplyFlyAPI.Models.Refund", b =>
+                {
+                    b.Property<int>("RefundId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RefundId"));
+
+                    b.Property<int>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("RefundAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("RefundDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RefundReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefundStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RefundId");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("Refunds");
                 });
 
             modelBuilder.Entity("SimplyFlyAPI.Models.Ticket", b =>
@@ -238,9 +341,21 @@ namespace SimplyFlyAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmailOtp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EmailOtpExpiry")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("OtpExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -248,6 +363,9 @@ namespace SimplyFlyAPI.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResetOtp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
@@ -259,15 +377,86 @@ namespace SimplyFlyAPI.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Seat", b =>
+                {
+                    b.HasOne("SimplyFlyAPI.Models.Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flight");
+                });
+
+            modelBuilder.Entity("SimplyFlyAPI.Models.Booking", b =>
+                {
+                    b.HasOne("SimplyFlyAPI.Models.Flight", "Flight")
+                        .WithMany()
+                        .HasForeignKey("FlightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SimplyFlyAPI.Models.User", "User")
+                        .WithMany("Bookings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flight");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SimplyFlyAPI.Models.Flight", b =>
                 {
+                    b.HasOne("SimplyFlyAPI.Models.User", "FlightOwner")
+                        .WithMany("Flights")
+                        .HasForeignKey("FlightOwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("SimplyFlyAPI.Models.FlightRoute", "Route")
-                        .WithMany()
+                        .WithMany("Flights")
                         .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("FlightOwner");
+
                     b.Navigation("Route");
+                });
+
+            modelBuilder.Entity("SimplyFlyAPI.Models.Passenger", b =>
+                {
+                    b.HasOne("SimplyFlyAPI.Models.Booking", "Booking")
+                        .WithMany()
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+                });
+
+            modelBuilder.Entity("SimplyFlyAPI.Models.Payment", b =>
+                {
+                    b.HasOne("SimplyFlyAPI.Models.Booking", "Booking")
+                        .WithMany()
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+                });
+
+            modelBuilder.Entity("SimplyFlyAPI.Models.Refund", b =>
+                {
+                    b.HasOne("SimplyFlyAPI.Models.Booking", "Booking")
+                        .WithMany()
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("SimplyFlyAPI.Models.Ticket", b =>
@@ -279,6 +468,18 @@ namespace SimplyFlyAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Booking");
+                });
+
+            modelBuilder.Entity("SimplyFlyAPI.Models.FlightRoute", b =>
+                {
+                    b.Navigation("Flights");
+                });
+
+            modelBuilder.Entity("SimplyFlyAPI.Models.User", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Flights");
                 });
 #pragma warning restore 612, 618
         }

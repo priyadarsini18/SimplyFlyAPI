@@ -7,7 +7,9 @@ public record CreateBookingDto(
     [Required]
     int FlightId,
 
-    [Range(1, 10,
-        ErrorMessage = "Seats must be between 1 and 10")]
-    int NumberOfSeats
+    [Range(1,10)]
+    int NumberOfSeats,
+
+    List<int> SeatIds,
+    string? SeatPreference
 );

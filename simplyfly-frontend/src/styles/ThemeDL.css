@@ -1,0 +1,43 @@
+.light-theme {
+	min-height: 100vh;
+	background: #f8fafc;
+	color: #111827;
+}
+.dark-theme {
+	min-height: 100vh;
+	background: #0f172a;
+	color: white;
+}
+	.dark-theme .card,
+	.dark-theme .stat-card,
+	.dark-theme .dashboard-card,
+	.dark-theme .activity-card {
+		background: #1e293b;
+		color: white;
+	}
+
+	.dark-theme table {
+		background: #1e293b;
+		color: white;
+	}
+
+	.dark-theme thead {
+		background: #111827;
+		color: white;
+	}
+	.dark-theme input,
+	.dark-theme select,
+	.dark-theme textarea {
+		background: #334155;
+		color: white;
+		border: 1px solid #475569;
+	}
+.theme-btn {
+	border: none;
+	background: white;
+	color: #111827;
+	padding: 8px 15px;
+	border-radius: 10px;
+	font-weight: 600;
+	cursor: pointer;
+}

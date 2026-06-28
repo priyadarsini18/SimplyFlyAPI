@@ -9,5 +9,9 @@ namespace SimplyFlyAPI.Services.Refunds
         Refund? GetRefundById(int id);
 
         Refund AddRefund(Refund refund);
+
+        Task<bool> ProcessRefund(
+            int refundId,
+            decimal refundAmount);
     }
 }
