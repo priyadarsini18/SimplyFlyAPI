@@ -28,7 +28,7 @@ const loadFlight = async () => {
     try {
 
         const response = await axios.get(
-            `http://localhost:8080/api/v1/Flights/${id}`
+            `https://localhost:8080/api/v1/Flights/${id}`
         );
 
         setFlight(response.data);
@@ -315,11 +315,30 @@ return (
                                                 </span>
                                             </p>
 
-                                            <p>
-                                                ✈ <strong>Journey:</strong>
-                                                {" "}
-                                                {flight.journeyType || "Non Stop"}
-                                            </p>
+                                            <div className="mb-2">
+                                                <p>
+                                                    ✈ <strong>Journey:</strong>{" "}
+                                                    {flight.journeyType || "Non Stop"}
+                                                </p>
+
+                                                {flight.journeyType === "1 Stop" && flight.stop1 && (
+                                                    <p className="ms-3 text-primary">
+                                                        📍 Stop : <strong>{flight.stop1}</strong>
+                                                    </p>
+                                                )}
+
+                                                {flight.journeyType === "2 Stops" && (
+                                                    <>
+                                                        <p className="ms-3 text-primary">
+                                                            📍 Stop 1 : <strong>{flight.stop1}</strong>
+                                                        </p>
+
+                                                        <p className="ms-3 text-primary">
+                                                            📍 Stop 2 : <strong>{flight.stop2}</strong>
+                                                        </p>
+                                                    </>
+                                                )}
+                                            </div>
                                             <p>
                                                 ⏱ <strong>Duration:</strong>
                                                 {" "}

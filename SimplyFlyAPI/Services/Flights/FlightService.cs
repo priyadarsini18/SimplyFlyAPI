@@ -133,43 +133,56 @@ namespace SimplyFlyAPI.Services.Flights
             return true;
         }
 
-        public bool UpdateFlight(
-    Flight updatedFlight,
-    int ownerId)
+        public bool UpdateFlight(Flight updatedFlight, int ownerId)
         {
             var flight = _context.Flights
                 .FirstOrDefault(f =>
-                    f.FlightId ==
-                    updatedFlight.FlightId &&
-                    f.FlightOwnerId ==
-                    ownerId);
+                    f.FlightId == updatedFlight.FlightId &&
+                    f.FlightOwnerId == ownerId);
 
             if (flight == null)
                 return false;
 
-            flight.FlightName =
-                updatedFlight.FlightName;
+            flight.FlightName = updatedFlight.FlightName;
+            flight.FlightNumber = updatedFlight.FlightNumber;
 
-            flight.FlightNumber =
-                updatedFlight.FlightNumber;
+            flight.FromCity = updatedFlight.FromCity;
+            flight.ToCity = updatedFlight.ToCity;
 
-            flight.FromCity =
-                updatedFlight.FromCity;
+            flight.RouteId = updatedFlight.RouteId;
 
-            flight.ToCity =
-                updatedFlight.ToCity;
+            flight.FromAirportName = updatedFlight.FromAirportName;
+            flight.FromAirportCode = updatedFlight.FromAirportCode;
 
-            flight.Price =
-                updatedFlight.Price;
+            flight.ToAirportName = updatedFlight.ToAirportName;
+            flight.ToAirportCode = updatedFlight.ToAirportCode;
 
-            flight.AvailableSeats =
-                updatedFlight.AvailableSeats;
+            flight.DepartureTime = updatedFlight.DepartureTime;
+            flight.ArrivalTime = updatedFlight.ArrivalTime;
+
+            flight.Price = updatedFlight.Price;
+
+            flight.TotalSeats = updatedFlight.TotalSeats;
+            flight.AvailableSeats = updatedFlight.AvailableSeats;
+
+            flight.CabinClass = updatedFlight.CabinClass;
+            flight.FlightType = updatedFlight.FlightType;
+            flight.JourneyType = updatedFlight.JourneyType;
+
+            flight.Stop1 = updatedFlight.Stop1;
+            flight.Stop2 = updatedFlight.Stop2;
+
+            flight.CabinBaggageKg = updatedFlight.CabinBaggageKg;
+            flight.CheckInBaggageKg = updatedFlight.CheckInBaggageKg;
+
+            flight.FoodIncluded = updatedFlight.FoodIncluded;
+
+            flight.Status = updatedFlight.Status;
 
             _context.SaveChanges();
 
             return true;
         }
 
-        
     }
 }

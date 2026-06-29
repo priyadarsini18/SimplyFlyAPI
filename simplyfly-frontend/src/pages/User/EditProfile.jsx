@@ -23,7 +23,7 @@ function EditProfile() {
 
         axios
             .get(
-                `http://localhost:8080/api/v1/User/${userId}`
+                `https://localhost:8080/api/v1/User/${userId}`
             )
             .then(res => {
 
@@ -54,7 +54,7 @@ function EditProfile() {
         try {
 
             const response = await axios.post(
-                "http://localhost:8080/api/v1/User/upload-profile",
+                "https://localhost:8080/api/v1/User/upload-profile",
                 formData,
                 {
                     headers: {
@@ -82,7 +82,7 @@ function EditProfile() {
         try {
 
             await axios.put(
-                `http://localhost:8080/api/v1/User/${user.userId}`,
+                `https://localhost:8080/api/v1/User/${user.userId}`,
                 user
             );
 
@@ -193,7 +193,7 @@ function EditProfile() {
                 {
                     user.profileImage &&
                     <img
-                        src={`http://localhost:8080${user.profileImage}`}
+                        src={`https://localhost:8080${user.profileImage}`}
                         alt="Profile"
                         width="150"
                         className="rounded-circle mb-3"

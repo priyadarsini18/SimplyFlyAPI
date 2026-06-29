@@ -10,9 +10,9 @@ namespace SimplyFlyAPI.Services
         private readonly TicketPdfService _ticketPdfService;
 
 
+     
 
-
-    public EmailService(
+        public EmailService(
         IConfiguration configuration,
         TicketPdfService ticketPdfService)
         {

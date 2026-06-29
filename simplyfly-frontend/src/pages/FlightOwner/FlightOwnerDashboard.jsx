@@ -47,7 +47,7 @@ function FlightOwnerDashboard() {
                     </li>
                     <li>
                         <Link to="/flight-owner/refunds">
-                            💰 Refund Requests
+                           Refund Requests
                         </Link>
                     </li>
 

@@ -25,7 +25,7 @@ function VerifyOtp() {
             try {
 
                 await axios.post(
-                    "http://localhost:8080/api/v1/Auth/verify-otp",
+                    "https://localhost:8080/api/v1/Auth/verify-otp",
                     {
                         email,
                         otp

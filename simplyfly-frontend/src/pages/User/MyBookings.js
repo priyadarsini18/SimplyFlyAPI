@@ -17,7 +17,7 @@ function MyBookings() {
             const token = localStorage.getItem("token");
 
             const response = await axios.get(
-                "http://localhost:8080/api/v1/Booking/my-bookings",
+                "https://localhost:8080/api/v1/Booking/my-bookings",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -42,7 +42,7 @@ function MyBookings() {
             const token = localStorage.getItem("token");
 
             const response = await axios.delete(
-                `http://localhost:8080/api/v1/Booking/${bookingId}`,
+                `https://localhost:8080/api/v1/Booking/${bookingId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

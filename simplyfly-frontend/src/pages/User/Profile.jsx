@@ -30,7 +30,7 @@ function Profile() {
 
             const response =
                 await axios.get(
-                    `http://localhost:8080/api/v1/User/${userId}`
+                    `https://localhost:8080/api/v1/User/${userId}`
                 );
 
             setUser(response.data);
@@ -51,7 +51,7 @@ function Profile() {
 
             const response =
                 await axios.get(
-                    "http://localhost:8080/api/v1/Booking/my-bookings",
+                    "https://localhost:8080/api/v1/Booking/my-bookings",
                     {
                         headers: {
                             Authorization:

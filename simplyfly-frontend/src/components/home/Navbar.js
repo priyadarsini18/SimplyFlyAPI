@@ -96,15 +96,16 @@ function Navbar({
 
                     {role === "User" && token && (
                         <>
+                            
+                            <Link className="nav-link text-white"
+                                to="/saved-flights">
+                                 Saved Flight
+                            </Link>
                             <Link
                                 className="nav-link text-white"
                                 to="/my-bookings"
                             >
                                 My Bookings
-                            </Link>
-                            <Link className="nav-link text-white"
-                                to="/saved-flights">
-                                 Saved Flight
                             </Link>
                             <li className="nav-item">
                                 <Link
@@ -155,6 +156,7 @@ function Navbar({
                             >
                                 Revenue
                             </Link>
+                            
                         </>
                     )}
 

@@ -19,7 +19,7 @@ function RegisterFlightOwner() {
         try {
 
             const response = await axios.post(
-                "http://localhost:8080/api/v1/Auth/register-flightowner",
+                "https://localhost:8080/api/v1/Auth/register-flightowner",
                 {
                     fullName,
                     email,

@@ -19,7 +19,7 @@ function OwnerBookings() {
 
             const response =
                 await axios.get(
-                    "http://localhost:8080/api/v1/Flights/owner-bookings",
+                    "https://localhost:8080/api/v1/Flights/owner-bookings",
                     {
                         headers: {
                             Authorization:

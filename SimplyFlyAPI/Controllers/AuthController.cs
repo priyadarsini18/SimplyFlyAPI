@@ -24,21 +24,21 @@ namespace SimplyFlyAPI.Controllers
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
         private readonly ILogger<AuthController> _logger;
-        private readonly EmailService _emailService;
+        private readonly IEmailService _emailService;
+
         public AuthController(
-    IAuthService authService,
-    IMapper mapper,
-    ILogger<AuthController> logger,
-    IConfiguration configuration,
-    AppDbContext context,
-    JwtService jwtService,
-    EmailService emailService)
+            IAuthService authService,
+            IMapper mapper,
+            ILogger<AuthController> logger,
+            IConfiguration configuration,
+            AppDbContext context,
+            JwtService jwtService,
+            IEmailService emailService)
         {
             _authService = authService;
             _mapper = mapper;
             _logger = logger;
             _configuration = configuration;
-
             _context = context;
             _jwtService = jwtService;
             _emailService = emailService;
@@ -135,6 +135,43 @@ namespace SimplyFlyAPI.Controllers
                 Role = user.Role
             });
         }
+        /*[HttpPost("login")]
+        public IActionResult Login(LoginDto dto)
+        {
+            try
+            {
+                var token = _authService.Login(dto.Email, dto.Password);
+
+                if (token == "EMAIL_NOT_VERIFIED")
+                {
+                    return BadRequest("Please verify your email first.");
+                }
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Unauthorized("Invalid Credentials");
+                }
+
+                var user = _authService.GetUserByEmail(dto.Email);
+
+                return Ok(new
+                {
+                    Message = "Login Successful",
+                    Token = token,
+                    UserId = user.UserId,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    Role = user.Role
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }*/
+
+
         [HttpPost("register-flightowner")]
         public async Task<IActionResult> RegisterFlightOwner(
     RegisterFlightOwnerDto dto)

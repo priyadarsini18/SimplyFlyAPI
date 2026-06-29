@@ -18,7 +18,7 @@ function OwnerMyFlights() {
 
             const response =
                 await axios.get(
-                    "http://localhost:8080/api/v1/Flights/my-flights",
+                    "https://localhost:8080/api/v1/Flights/my-flights",
                     {
                         headers: {
                             Authorization:
@@ -47,7 +47,7 @@ function OwnerMyFlights() {
                 localStorage.getItem("token");
 
             await axios.delete(
-                `http://localhost:8080/api/v1/Flights/${flightId}`,
+                `https://localhost:8080/api/v1/Flights/${flightId}`,
                 {
                     headers: {
                         Authorization:

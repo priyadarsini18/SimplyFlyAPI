@@ -30,7 +30,7 @@ function Ticket() {
 
             const response =
                 await axios.get(
-                    `http://localhost:8080/api/v1/Booking/${id}`,
+                    `https://localhost:8080/api/v1/Booking/${id}`,
                     {
                         headers: {
                             Authorization:

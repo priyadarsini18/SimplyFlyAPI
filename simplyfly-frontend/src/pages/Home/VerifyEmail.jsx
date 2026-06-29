@@ -26,7 +26,7 @@ function VerifyEmail() {
 
                 const response =
                     await axios.post(
-                        "http://localhost:8080/api/v1/Auth/verify-email",
+                        "https://localhost:8080/api/v1/Auth/verify-email",
                         {
                             email,
                             otp: otp.toString()

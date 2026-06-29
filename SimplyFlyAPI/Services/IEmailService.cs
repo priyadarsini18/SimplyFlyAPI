@@ -2,6 +2,9 @@
 {
     public interface IEmailService
     {
+        Task SendVerificationEmail(string email, string otp);
+
+        Task SendOtpEmail(string email, string otp);
         Task SendTicketEmail(
             string email,
             string passengerName,

@@ -187,31 +187,22 @@ namespace SimplyFlyAPI.Controllers
             });
         }
 
-        [HttpPut]
-        [Authorize(Roles = "FlightOwner")]
-        public IActionResult UpdateFlight([FromBody]
-    Flight flight)
-        {
-            var ownerId = int.Parse(
-                User.FindFirst(
-                    ClaimTypes.NameIdentifier)!
-                .Value);
 
-            var result =
-                _flightService.UpdateFlight(
-                    flight,
-                    ownerId);
+        [HttpPut("{id}")]
+        [Authorize(Roles = "FlightOwner")]
+        public IActionResult UpdateFlight(int id, [FromBody] Flight flight)
+        {
+            if (id != flight.FlightId)
+                return BadRequest();
+
+            var ownerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            var result = _flightService.UpdateFlight(flight, ownerId);
 
             if (!result)
-            {
                 return NotFound();
-            }
 
-            return Ok(new
-            {
-                Message =
-                "Flight Updated Successfully"
-            });
+            return Ok(new { Message = "Flight Updated Successfully" });
         }
     }
 }

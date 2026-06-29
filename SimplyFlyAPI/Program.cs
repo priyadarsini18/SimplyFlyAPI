@@ -119,6 +119,7 @@ builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRefundService,RefundService>();
 builder.Services.AddScoped<TicketPdfService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 // JWT Authentication
 
 builder.Services
@@ -150,7 +151,6 @@ builder.Services
 
 builder.Services
     .AddProblemDetails();
-builder.Services.AddScoped<IEmailService, EmailService>();
 // Build
 
 var app = builder.Build();

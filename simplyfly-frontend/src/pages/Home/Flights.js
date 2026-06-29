@@ -41,7 +41,7 @@ function Flights() {
         try {
 
             const response = await axios.get(
-                `http://localhost:8080/api/v1/Flights?PageNumber=${pageNumber}&PageSize=${pageSize}`
+                `https://localhost:8080/api/v1/Flights?PageNumber=${pageNumber}&PageSize=${pageSize}`
             );
 
             setFlights(response.data.data);
@@ -57,7 +57,7 @@ function Flights() {
 
             const response =
                 await axios.get(
-                    "http://localhost:8080/api/v1/Route"
+                    "https://localhost:8080/api/v1/Route"
                 );
 
             const cityList = [
@@ -91,7 +91,7 @@ function Flights() {
         try {
 
             const response = await axios.get(
-                `http://localhost:8080/api/v1/Flights/search?fromCity=${fromCity}&toCity=${toCity}&journeyDate=${journeyDate}`
+                `https://localhost:8080/api/v1/Flights/search?fromCity=${fromCity}&toCity=${toCity}&journeyDate=${journeyDate}`
             );
 
             setFlights(response.data);

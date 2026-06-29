@@ -35,7 +35,14 @@ const destinations = [
         price: "$599",
         image:
             "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2"
-    }
+    },
+    {
+        city: "Tokyo",
+        country: "Japan • HND",
+        price: "$899",
+        image:
+            "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf"
+    },
 ];
 
 function DestinationsSection() {

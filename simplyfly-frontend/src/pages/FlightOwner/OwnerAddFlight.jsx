@@ -23,15 +23,19 @@ function OwnerAddFlight() {
     const [routes, setRoutes] = useState([]);
     const [cabinBaggageKg,setCabinBaggageKg] =
         useState(7);
-    const [cabinClass, setCabinClass] =
-        useState("Economy");
+    const [availableClasses, setAvailableClasses] =
+        useState([]);
 
     const [flightType, setFlightType] =
         useState("Domestic");
 
     const [journeyType, setJourneyType] =
         useState("Non Stop");
+    const [stop1, setStop1] =
+        useState("");
 
+    const [stop2, setStop2] =
+        useState("");
     const [foodIncluded, setFoodIncluded] =
         useState(false);
 
@@ -51,7 +55,7 @@ function OwnerAddFlight() {
 
             const response =
                 await axios.get(
-                    "http://localhost:8080/api/v1/Route",
+                    "https://localhost:8080/api/v1/Route",
                     {
                         headers: {
                             Authorization:
@@ -74,10 +78,33 @@ function OwnerAddFlight() {
             console.log(error);
         }
     };
+    const handleCabinClassChange = (value) => {
 
+        if (availableClasses.includes(value)) {
+
+            setAvailableClasses(
+                availableClasses.filter(
+                    x => x !== value
+                )
+            );
+        }
+        else {
+
+            setAvailableClasses([
+                ...availableClasses,
+                value
+            ]);
+        }
+    };
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+        if (availableClasses.length === 0) {
+
+            alert("Please select at least one cabin class");
+
+            return;
+        }
 
         if (!routeId) {
 
@@ -91,7 +118,7 @@ function OwnerAddFlight() {
                 localStorage.getItem("token");
 
             await axios.post(
-                "http://localhost:8080/api/v1/Flights",
+                "https://localhost:8080/api/v1/Flights",
                 {
                     flightName,
                     flightNumber,
@@ -107,10 +134,15 @@ function OwnerAddFlight() {
                     price: Number(price),
                     totalSeats: Number(totalSeats),
                     availableSeats: Number(availableSeats),
-                    cabinClass,
-flightType,
-journeyType,
-foodIncluded,
+                    cabinClass: availableClasses.join(","),
+
+                    flightType,
+                    journeyType,
+
+                    stop1,
+                    stop2,
+
+                    foodIncluded,
                     status,
                     cabinBaggageKg:
                         Number(cabinBaggageKg),
@@ -144,6 +176,17 @@ foodIncluded,
             setCabinBaggageKg(7);
 
             setCheckInBaggageKg(15);
+            setAvailableClasses([]);
+
+            setStop1("");
+
+            setStop2("");
+
+            setJourneyType("Non Stop");
+
+            setFlightType("Domestic");
+
+            setFoodIncluded(false);
 
         }
         catch (error) {
@@ -365,32 +408,57 @@ foodIncluded,
                             )
                         }
                     />
-                    <label>Cabin Class</label>
+                    <label className="mb-2">
+                        Available Cabin Classes
+                    </label>
 
-                    <select
-                        className="form-control mb-3"
-                        value={cabinClass}
-                        onChange={(e) =>
-                            setCabinClass(e.target.value)
-                        }
-                    >
-                        <option value="All Classes">
-                            All Classes
-                        </option>
-                        <option value="Economy">
-                            Economy
-                        </option>
+                    <div className="mb-3">
 
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                checked={availableClasses.includes("Economy")}
+                                onChange={() =>
+                                    handleCabinClassChange("Economy")
+                                }
+                            />
+                            <label className="form-check-label">
+                                Economy
+                            </label>
+                        </div>
 
-                        <option value="Business">
-                            Business
-                        </option>
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                checked={availableClasses.includes("Business")}
+                                onChange={() =>
+                                    handleCabinClassChange("Business")
+                                }
+                            />
+                            <label className="form-check-label">
+                                Business
+                            </label>
+                        </div>
 
                         
-                        <option value="First Class">
-                            First Class
-                        </option>
-                    </select>
+
+                        <div className="form-check">
+                            <input
+                                type="checkbox"
+                                className="form-check-input"
+                                checked={availableClasses.includes("First Class")}
+                                onChange={() =>
+                                    handleCabinClassChange("First Class")
+                                }
+                            />
+                            <label className="form-check-label">
+                                First Class
+                            </label>
+                        </div>
+
+                    </div>
                     <label>Flight Type</label>
 
                     <select
@@ -429,6 +497,48 @@ foodIncluded,
                             2 Stops
                         </option>
                     </select>
+                    {
+                        journeyType === "1 Stop" && (
+
+                            <input
+                                className="form-control mb-3"
+                                placeholder="Stop 1"
+                                value={stop1}
+                                onChange={(e) =>
+                                    setStop1(e.target.value)
+                                }
+                            />
+
+                        )
+                    }
+
+                    {
+                        journeyType === "2 Stops" && (
+
+                            <>
+
+                                <input
+                                    className="form-control mb-3"
+                                    placeholder="Stop 1"
+                                    value={stop1}
+                                    onChange={(e) =>
+                                        setStop1(e.target.value)
+                                    }
+                                />
+
+                                <input
+                                    className="form-control mb-3"
+                                    placeholder="Stop 2"
+                                    value={stop2}
+                                    onChange={(e) =>
+                                        setStop2(e.target.value)
+                                    }
+                                />
+
+                            </>
+
+                        )
+                    }
                     <div className="form-check mb-3">
 
                         <input

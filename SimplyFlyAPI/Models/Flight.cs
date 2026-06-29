@@ -75,5 +75,6 @@ namespace SimplyFlyAPI.Models
 
         public bool IsDeleted { get; set; } = false;
         public ICollection<SeatReservation> SeatReservations { get; set; }
+    = new List<SeatReservation>();
     }
 }

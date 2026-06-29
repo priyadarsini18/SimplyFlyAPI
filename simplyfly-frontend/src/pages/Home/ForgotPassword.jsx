@@ -10,7 +10,7 @@ function ForgotPassword() {
     const sendOtp = async () => {
         try {
             await axios.post(
-                "http://localhost:8080/api/v1/Auth/forgot-password",
+                "https://localhost:8080/api/v1/Auth/forgot-password",
                 {
                     email
                 }

@@ -21,7 +21,7 @@ function ProfileSidebar({ user }) {
                 <img
                     src={
                         user.profileImage
-                            ? `http://localhost:8080${user.profileImage}`
+                            ? `https://localhost:8080${user.profileImage}`
                             : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                     }
                     alt="User"

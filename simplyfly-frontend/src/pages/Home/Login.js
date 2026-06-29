@@ -6,7 +6,7 @@ import logo from "../../assets/simplyflylogo.png";
 import AuthNavbar from "../../components/home/AuthNavbar";
 import { GoogleLogin }
     from "@react-oauth/google";
-
+import API from "../../services/api";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -18,8 +18,8 @@ function Login() {
 
         try {
 
-            const response = await axios.post(
-                "http://localhost:8080/api/v1/Auth/google-login",
+            const response = await API.post(
+                "/Auth/google-login",
                 {
                     token: credentialResponse.credential
                 }
@@ -91,14 +91,13 @@ switch(role)
         e.preventDefault();
 
         try {
-            const response = await axios.post(
-                "http://localhost:8080/api/v1/Auth/login",
+            const response = await API.post(
+                "/Auth/login",
                 {
                     email,
                     password
                 }
             );
-
             localStorage.setItem("token", response.data.token);
 
             localStorage.setItem("userId", response.data.userId);

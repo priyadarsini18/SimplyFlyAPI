@@ -30,6 +30,7 @@ function OwnerEditFlight() {
         availableSeats: "",
 
         cabinClass: "",
+        availableClasses: [],
         
 
         flightType: "",
@@ -47,17 +48,15 @@ function OwnerEditFlight() {
     });
     const [routes, setRoutes] = useState([]);
     useEffect(() => {
-        loadFlight();
         loadRoutes();
+        loadFlight();
     }, []);
     const loadRoutes = async () => {
-
         try {
-
             const token = localStorage.getItem("token");
-            console.log("TOKEN =", token);
+
             const response = await axios.get(
-                "http://localhost:8080/api/v1/Route",
+                "https://localhost:8080/api/v1/Route",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -65,14 +64,10 @@ function OwnerEditFlight() {
                 }
             );
 
-            console.log(response.data);
             setRoutes(response.data);
 
-        }
-        catch (error) {
-            console.log(error.response);
-            console.log(error.response?.data);
-            console.log(error.response?.status);
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -83,26 +78,57 @@ function OwnerEditFlight() {
             const token =
                 localStorage.getItem("token");
 
-            const response =
-                await axios.get(
-                    `http://localhost:8080/api/v1/Flights/${id}`,
-                    {
-                        headers: {
-                            Authorization:
-                                `Bearer ${token}`
-                        }
-                    });
+            const response = await axios.get(
+                `https://localhost:8080/api/v1/Flights/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
 
-            setFlight(response.data);
+            setFlight({
+                ...response.data,
+                availableClasses: response.data.cabinClass
+                    ? response.data.cabinClass.split(",")
+                    : []
+            });
 
         }
         catch (error) {
-
             console.log(error);
+            console.log(error.response);
+            console.log(error.response?.data);
 
             alert(
-                "Failed To Load Flight"
+                JSON.stringify(error.response?.data, null, 2)
             );
+        }
+    };
+    const handleClassChange = (e) => {
+
+        const value = e.target.value;
+
+        if (e.target.checked) {
+
+            setFlight({
+                ...flight,
+                availableClasses: [
+                    ...flight.availableClasses,
+                    value
+                ]
+            });
+
+        } else {
+
+            setFlight({
+                ...flight,
+                availableClasses:
+                    flight.availableClasses.filter(
+                        c => c !== value
+                    )
+            });
+
         }
     };
 
@@ -110,37 +136,78 @@ function OwnerEditFlight() {
 
         e.preventDefault();
 
+        if (flight.availableClasses.length === 0) {
+            alert("Please select at least one cabin class");
+            return;
+        }
+
         try {
 
-            const token =
-                localStorage.getItem("token");
+            const token = localStorage.getItem("token");
+            console.log(flight);
+            const request = {
+                flightId: flight.flightId,
+                flightName: flight.flightName,
+                flightNumber: flight.flightNumber,
+
+                fromCity: flight.fromCity,
+                toCity: flight.toCity,
+
+                fromAirportName: flight.fromAirportName,
+                fromAirportCode: flight.fromAirportCode,
+
+                toAirportName: flight.toAirportName,
+                toAirportCode: flight.toAirportCode,
+
+                routeId: Number(flight.routeId),
+
+                departureTime: flight.departureTime,
+                arrivalTime: flight.arrivalTime,
+
+                price: Number(flight.price),
+
+                totalSeats: Number(flight.totalSeats),
+                availableSeats: Number(flight.availableSeats),
+
+                cabinClass: flight.availableClasses.join(","),
+
+                flightType: flight.flightType,
+                journeyType: flight.journeyType,
+
+                stop1: flight.stop1,
+                stop2: flight.stop2,
+
+                cabinBaggageKg: Number(flight.cabinBaggageKg),
+                checkInBaggageKg: Number(flight.checkInBaggageKg),
+
+                foodIncluded: flight.foodIncluded,
+
+                status: flight.status,
+
+                flightOwnerId: Number(flight.flightOwnerId)
+            };
+
+            console.log(request);
 
             await axios.put(
-                "http://localhost:8080/api/v1/Flights",
-                flight,
+                `https://localhost:8080/api/v1/Flights/${id}`,
+                request,
                 {
                     headers: {
-                        Authorization:
-                            `Bearer ${token}`
+                        Authorization: `Bearer ${token}`
                     }
-                });
-
-            alert(
-                "Flight Updated Successfully"
+                }
             );
 
-            navigate(
-                "/owner-my-flights"
-            );
+            alert("Flight Updated Successfully");
 
+            navigate("/owner-my-flights");
         }
         catch (error) {
 
-            console.log(error);
+            console.log(error.response);
 
-            alert(
-                "Failed To Update Flight"
-            );
+            alert("Failed To Update Flight");
         }
     };
 
@@ -251,25 +318,29 @@ function OwnerEditFlight() {
                     }
                 />
 
-                <select
-                    className="form-control mb-3"
-                    value={flight.routeId}
-                    onChange={(e) =>
-                        setFlight({
-                            ...flight,
-                            routeId: Number(e.target.value)
-                        })
-                    }
-                >
-                    {routes.map(route => (
-                        <option
-                            key={route.routeId}
-                            value={route.routeId}
-                        >
-                            {route.source} → {route.destination}
-                        </option>
-                    ))}
-                </select>
+                    <label>Route</label>
+
+                    <select
+                        className="form-control mb-3"
+                        value={flight.routeId}
+                        onChange={(e) =>
+                            setFlight({
+                                ...flight,
+                                routeId: Number(e.target.value)
+                            })
+                        }
+                    >
+                        <option value="">Select Route</option>
+
+                        {routes.map(route => (
+                            <option
+                                key={route.routeId}
+                                value={route.routeId}
+                            >
+                                {route.source} → {route.destination}
+                            </option>
+                        ))}
+                    </select>
 
                 <label>
                     Departure Time
@@ -349,25 +420,61 @@ function OwnerEditFlight() {
                         })
                     }
                 />
-                <label>Cabin Class</label>
+                    <label>Available Cabin Classes</label>
 
-                <select
-                    className="form-control mb-3"
-                    value={flight.cabinClass || ""}
-                    onChange={(e) =>
-                        setFlight({
-                            ...flight,
-                            cabinClass: e.target.value
-                        })
-                    }
-                >
-                    <option value="Economy">Economy</option>
-                    <option value="Premium Economy">Premium Economy</option>
-                    <option value="Business">Business</option>
-                    <option value="First Class">First Class</option>
-                    <option value="All Classes">All Classes</option>
-                </select>
-                <label>Flight Type</label>
+                    <div className="form-check">
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            value="Economy"
+                            checked={flight.availableClasses?.includes("Economy")}
+                            onChange={handleClassChange}
+                        />
+                        <label className="form-check-label">
+                            Economy
+                        </label>
+                    </div>
+
+                    <div className="form-check">
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            value="Business"
+                            checked={flight.availableClasses?.includes("Business")}
+                            onChange={handleClassChange}
+                        />
+                        <label className="form-check-label">
+                            Business
+                        </label>
+                    </div>
+
+                    <div className="form-check">
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            value="Premium Economy"
+                            checked={flight.availableClasses?.includes("Premium Economy")}
+                            onChange={handleClassChange}
+                        />
+                        <label className="form-check-label">
+                            Premium Economy
+                        </label>
+                    </div>
+
+                    <div className="form-check mb-3">
+                        <input
+                            type="checkbox"
+                            className="form-check-input"
+                            value="First Class"
+                            checked={flight.availableClasses?.includes("First Class")}
+                            onChange={handleClassChange}
+                        />
+                        <label className="form-check-label">
+                            First Class
+                        </label>
+                    </div>
+
+                    <label>Flight Type</label>
 
                 <select
                     className="form-control mb-3"
